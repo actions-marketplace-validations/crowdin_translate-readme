@@ -39,10 +39,10 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Translate Readme
-      uses: crowdin/translate-readme@v0.1.0
+      uses: crowdin/translate-readme@v0.1.2
       env:
         CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
         CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
@@ -71,19 +71,22 @@ on:
 jobs:
   translate-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Translate Readme
-      uses: crowdin/translate-readme@v0.1.0
+      uses: crowdin/translate-readme@v0.1.2
       env:
         CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
         CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v5
       with:
         title: New Readme Translations by Crowdin
         body: By [translate-readme](https://github.com/crowdin/translate-readme) GitHub action
@@ -107,7 +110,7 @@ Also, don't forget to add the following option to your workflow step:
 
 ```diff
 ​- name: Translate Readme
-  uses: crowdin/translate-readme@v0.1.0
+  uses: crowdin/translate-readme@v0.1.2
   with:
 +    language_switcher: true
   env:
@@ -149,13 +152,16 @@ on:
 jobs:
   translate-readme:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Upload README.md to Crowdin
-        uses: crowdin/translate-readme@v0.1.0
+        uses: crowdin/translate-readme@v0.1.2
         with:
           upload_sources: true
           download_translations: false
@@ -173,7 +179,7 @@ jobs:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
 
       - name: Download Readme translations from Crowdin
-        uses: crowdin/translate-readme@v0.1.0
+        uses: crowdin/translate-readme@v0.1.2
         with:
           upload_sources: false
           download_translations: true
@@ -185,6 +191,10 @@ jobs:
 ```
 
 For more about the Pre-Translate command arguments, please refer to the official [Crowdin CLI documentation](https://crowdin.github.io/crowdin-cli/commands/crowdin-pre-translate).
+
+## Demo
+
+Visit the [translate-readme-demo](https://github.com/andrii-bodnar/translate-readme-demo) to see how the action works in a real project.
 
 ## Contributing
 
